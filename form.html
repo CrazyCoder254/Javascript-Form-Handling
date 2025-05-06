@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Form Demo</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .hidden { display: none; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+
+  <h2>Register</h2>
+  <form id="registerForm">
+    <label>
+      Username:
+      <input type="text" id="username" required>
+    </label><br><br>
+
+    <label>
+      Password:
+      <input type="password" id="password" required>
+      <button type="button" id="togglePassword">Show</button>
+    </label><br><br>
+
+    <button type="submit">Submit</button>
+    <p class="error hidden" id="errorMessage">Please fill in all fields.</p>
+  </form>
+
+  <script>
+    const form = document.getElementById('registerForm');
+    const username = document.getElementById('username');
+    const password = document.getElementById('password');
+    const toggleBtn = document.getElementById('togglePassword');
+    const errorMsg = document.getElementById('errorMessage');
+
+    // Toggle password visibility
+    toggleBtn.addEventListener('click', () => {
+      const isPassword = password.type === 'password';
+      password.type = isPassword ? 'text' : 'password';
+      toggleBtn.textContent = isPassword ? 'Hide' : 'Show';
+    });
+
+    // Form submission and validation
+    form.addEventListener('submit', (event) => {
+      event.preventDefault(); // Prevent actual form submission
+
+      if (username.value.trim() === "" || password.value.trim() === "") {
+        errorMsg.classList.remove('hidden');
+      } else {
+        errorMsg.classList.add('hidden');
+        alert(`Welcome, ${username.value}!`);
+        form.reset(); // Clear the form
+        toggleBtn.textContent = 'Show'; // Reset toggle
+        password.type = 'password'; // Ensure password is hidden again
+      }
+    });
+  </script>
+
+</body>
+</html>
